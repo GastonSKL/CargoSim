@@ -11,7 +11,7 @@ export class UsersService {
   private baseUrl:string;
 
   constructor() { 
-    this.baseUrl = 'https://localhost:44338';
+    this.baseUrl = 'http://localhost:44338';
   }
 
   register(formValue: any){
