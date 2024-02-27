@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  hahncargosim:
+    image: hahncargosim
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 44338:44338
+    depends_on:
+      - rabbitmq
+    networks:
+      - my-network
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "5672:5672" 
+      - "15672:15672"
+    networks:
+      - my-network
+
+networks:
+  my-network:
