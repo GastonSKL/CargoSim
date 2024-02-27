@@ -1,0 +1,12 @@
+.main{
+    height: 100vh;
+    
+}
+.content{
+    width: 80%;
+    margin: 2em auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
