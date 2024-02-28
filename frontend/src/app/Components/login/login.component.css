@@ -8,4 +8,8 @@
     border: none;
   }
   
-  
+.error-text{
+  font-size: .7em;
+    bottom: -16px;
+    left: 13px;
+}
