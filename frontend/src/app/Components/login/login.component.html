@@ -16,10 +16,10 @@
                 Password is required.
             </span>
         </div>
-        <input type="submit" [class]="!isButtonDisabled ? 'btn btn-primary ' : 'btn btn-danger'" style="width: 100%;" [disabled]="isButtonDisabled">
+        <input type="submit" [class]="!isButtonDisabled ? 'btn btn-primary mt-3' : 'btn btn-danger mt-3'" style="width: 100%;" [disabled]="isButtonDisabled">
     </form>
     <div class="text-left pt-2 position-absolute" style="bottom: -10px; left: 30px;">
-        <p class="error" *ngIf="isLogged == false">Wrong credentials</p>
-        <p class="success" *ngIf="isLogged">Successful login!</p>
+        <p class=" error-text text-danger" *ngIf="isLogged == false">Wrong credentials</p>
+        <p class="error-text " *ngIf="isLogged">Successful login! Redirecting...</p>
     </div>
 </div>
