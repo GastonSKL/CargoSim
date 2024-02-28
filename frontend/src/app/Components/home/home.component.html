@@ -1,0 +1,12 @@
+<div class="container text-center position-relative" style="min-width: 800px;" *ngIf="!simStarted ">
+    <div [@fadeInOut] style="display: flex; flex-direction: column; align-items: center; justify-content: center;" *ngIf="!simStarting">
+        <div class="display-4">Welcome to Hahn simulation!</div>
+        <img src="../../../assets/cargoLogo.png" alt="cargo" style="width: 300px;">
+        <button class="btn-custom" (click)="startSim()">Start</button>    
+    </div>
+    <div [@fadeInOut] class="sim-started" *ngIf="simStarting">
+    Simulation starting...
+    </div>
+</div>
+<div class="container" *ngIf="simStarted"> 
+</div>

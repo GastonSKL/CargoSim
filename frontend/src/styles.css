@@ -16,3 +16,17 @@ body {
 		background-position: 0% 50%;
 	}
 }
+
+.btn-custom{
+	background-color: #ffffff40;
+	border-radius: 0.375em;
+	border: 1var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	width: 60%;
+	height: 2.2em;
+}
+
+.btn-custom:hover{
+	background-color: var(--bs-btn-hover-bg);
+	color: white;
+}

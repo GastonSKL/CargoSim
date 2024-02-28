@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse  } from '@angular/common/http';
+import { firstValueFrom, Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,26 @@ export class SimulationService {
       this.baseUrl = 'http://localhost:44338';
    }
 
-   start_simulation(token: string){
+   start_simulation(token: string | null): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return firstValueFrom(
-      this.httpClient.post<any>(`${this.baseUrl}/Sim/Start`, '', { headers })
-    );
+  
+    return this.httpClient.post<any>(`${this.baseUrl}/Sim/Start`, '', { headers, observe: 'response' })
+      .pipe(
+        catchError((error: any) => {
+          let errorMessage: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `Error: ${error.error.message}`;
+          } else {
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          }
+          return errorMessage;
+        })
+      );
   }
 
-  stop_simulation(token: string){
+  stop_simulation(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -32,7 +43,7 @@ export class SimulationService {
     );
   }
 
-  get_coins(token: string){
+  get_coins(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -41,7 +52,7 @@ export class SimulationService {
     );
   }
 
-  get_grid(token: string){
+  get_grid(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -50,7 +61,7 @@ export class SimulationService {
     );
   }
 
-  get_all_available(token: string){
+  get_all_available(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -59,7 +70,7 @@ export class SimulationService {
     );
   }
 
-  get_all_accepted(token: string){
+  get_all_accepted(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -68,7 +79,7 @@ export class SimulationService {
     );
   }
 
-  post_accept(token: string, id: number){
+  post_accept(token: string | null, id: number){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -77,7 +88,7 @@ export class SimulationService {
     );
   }
 
-  post_create(token: string){
+  post_create(token: string | null){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -86,7 +97,7 @@ export class SimulationService {
     );
   }
 
-  get_cargo_transporter(token: string, id: number){
+  get_cargo_transporter(token: string | null, id: number){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -96,7 +107,7 @@ export class SimulationService {
     );
   }
 
-  buy_cargo_transporter(token: string, id: number){
+  buy_cargo_transporter(token: string | null, id: number){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -106,7 +117,7 @@ export class SimulationService {
     );
   }
 
-  move_cargo_transporter(token: string, id: number, targetNodeId: number){
+  move_cargo_transporter(token: string | null, id: number, targetNodeId: number){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });

@@ -19,8 +19,8 @@ export class LoginComponent {
 
   constructor() {
     this.formulario = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]), // Add Validators.required
-      password: new FormControl('', [Validators.required]), // Add Validators.required
+      username: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]), 
+      password: new FormControl('', [Validators.required]), 
     });
   }
 
@@ -29,13 +29,13 @@ export class LoginComponent {
     this.submitted = true;
     localStorage.clear();
     try {
-      if (this.formulario.valid) { // Check if the form is valid
+      if (this.formulario.valid) { 
         let response = await this.userService.register(this.formulario.value);
         localStorage.setItem('token', response.token);
         if (response.token && response.userName) {
           this.isLogged = true;
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           }, 1500);
         } else {
           this.isLogged = false;
@@ -45,7 +45,6 @@ export class LoginComponent {
           }, 1500);
         }
       } else {
-        // Form is invalid, handle accordingly
         console.log('Form is invalid');
       }
     } catch (err) {
