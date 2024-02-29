@@ -3,13 +3,14 @@
         <div>
             Orders
         </div>
-        <div>
-            <button class="btn-custom" style="width: 100px;" (click)="createOrders()">Create more</button>
+        <div style="display: flex; gap: .5em;">
+            <button class="btn-custom" style="width: 150px; " (click)="createOrders()">Create more</button>
+            <button class="btn-custom" (click)="closeOrders()">Close</button>
         </div>
     </div>
     <div style="overflow: auto;">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 1em; padding: 1em 0;">
-            <div class="order-item" *ngFor="let object of ordersList">
+            <div class="order-item" *ngFor="let object of ordersList" (click)="acceptOrder(object.id)">
                 <div style="display: flex; justify-content: space-between;">
                     <div style="padding-left: .5em;">Id:</div>
                     <div style="padding-right: .5em;">{{object.id}}</div>
@@ -30,6 +31,7 @@
                     <div style="padding-left: .5em;">Load:</div>
                     <div style="padding-right: .5em;">{{object.load}}</div>
                 </div>
+                
             </div>
         </div>
     </div>

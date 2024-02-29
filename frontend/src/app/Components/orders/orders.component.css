@@ -5,7 +5,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.938);
+  background-color: rgba(255, 255, 255, 0.473);
   z-index: 999;
 }
 
@@ -24,6 +24,7 @@
   height: 100px;
   border: 1px solid black;
   font-size: .8em;
+  background-color: white;
 }
 
 .order-item:hover{

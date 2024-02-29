@@ -1,5 +1,5 @@
 <div *ngIf="isAuthenticated" >
-    <!-- <div class="container text-center position-relative" style="min-width: 800px;" *ngIf="!simStarted ">
+    <div class="container text-center position-relative" style="min-width: 800px;" *ngIf="!simStarted ">
         <div [@fadeInOut] style="display: flex; flex-direction: column; align-items: center; justify-content: center;" *ngIf="!simStarting">
             <div class="display-4">Welcome to Hahn simulation!</div>
             <img src="../../../assets/cargoLogo.png" alt="cargo" style="width: 300px;">
@@ -8,20 +8,25 @@
         <div [@fadeInOut] class="sim-started" *ngIf="simStarting">
         Simulation starting...
         </div>
-    </div> -->
-    <div  >
+    </div>
+    <div *ngIf="simStarted " >
         <app-navbar [isStarted]="simStarted" class="nav-extra"></app-navbar>
         <div class="container-fluid p-3 home-container">
-            <div class="home-header">
-                <p class="text-white">Total coins: <b>${{totalCoins}}</b></p>
-                <p class="text-white">Cargo Vehicles: <b>{{totalVehicles}}</b></p>
-                <button class="btn btn-success" style="width: 100px;" (click)="buyCargo()">Buy</button>
-                <button class="btn btn-secondary" style="width: 100px; margin-top: 1em;" onclick="location.reload()">Refresh</button>
+            <div class="header-container">
+                <div class="home-header">
+                    <p class="text-white">Total coins: <b>${{totalCoins}}</b></p>
+                    <p class="text-white">Cargo Vehicles: <b>{{totalVehicles}}</b></p>
+                    <button class="btn btn-success" style="width: 100px;" (click)="buyCargo()">Buy</button>
+                    <button class="btn btn-secondary" style="width: 100px; margin-top: 1em;" (click)="refreshList()">Refresh</button>
+                </div>
+                <div>
+                    <button class="btn-custom" style="width: 150px;" (click)="toggleOpenOrders()">Orders</button>
+                </div>
             </div>
             <div class="cargo-container">
                 <div class="cargo-item" *ngFor="let object of cargoVehicles">
                     <img src="../../../assets/cargoLogo.png" style=" width: 150px; border-bottom: 1px solid black; background-color: rgba(255, 255, 255, 0.774);">
-                    <div class="cargo-item-content">
+                    <div class="cargo-item-content" [class]="object.load != 0 ? 'cargo-item-content cargo-item-content-loaded' : 'cargo-item-content'">
                         <div class="cargo-item-content-text"><b>Id:</b>{{object.id}}</div>
                         <div class="cargo-item-content-text"><b>Position:</b> {{object.positionNodeId}}</div>
                         <div class="cargo-item-content-text"><b>In transit:</b> {{object.inTransit}}</div>
@@ -32,7 +37,7 @@
                 </div>
             </div>
         </div>
-    <app-orders></app-orders>
+    <app-orders [openOrders]="openOrders" *ngIf="openOrders"></app-orders>
 
     </div>
 </div>

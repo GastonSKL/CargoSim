@@ -58,6 +58,10 @@
   text-overflow: ellipsis;
 }
 
+.cargo-item-content-loaded{
+  background-color: rgb(228 243 27 / 46%) !important;
+}
+
 .cargo-item-content-text{
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,4 +70,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 1em;
+}
+
+.header-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }

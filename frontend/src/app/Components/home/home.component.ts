@@ -1,4 +1,10 @@
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { SimulationService } from '../../Services/simulation.service';
 import { CargoResponse } from '../../Interfaces/cargo-response';
@@ -10,12 +16,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
   animations: [
     trigger('fadeInOut', [
-      state('void', style({
-        opacity: 0
-      })),
+      state(
+        'void',
+        style({
+          opacity: 0,
+        })
+      ),
       transition('void <=> *', animate(300)),
-    ])
-  ]
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   simStarted: boolean = false;
@@ -23,23 +32,36 @@ export class HomeComponent implements OnInit {
   token: string | null = '';
   cargoVehicles: CargoResponse[] = [];
   isAuthenticated: boolean = false;
-  totalVehicles :number = 0;
-  totalCoins :number = 0;
+  totalVehicles: number = 0;
+  totalCoins: number = 0;
+  openOrders: boolean = false;
+  cargosIds: number[] = [];
+  locationId: number = 1;
 
-  constructor(private simulationService: SimulationService, private router: Router) { }
+  constructor(
+    private simulationService: SimulationService,
+    private router: Router
+  ) {}
 
-   async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.token = localStorage.getItem('token');
     this.isAuthenticated = !!this.token;
     await this.getVehicles();
     this.totalVehicles = this.cargoVehicles.length;
-    this.totalCoins =  await this.getCoins();
+    this.totalCoins = await this.getCoins();
+  }
+
+  async refreshList(){
+    await this.getVehicles();
+    this.totalCoins = await this.getCoins();
   }
 
   async startSim() {
     this.token = localStorage.getItem('token');
     try {
-      let response = await this.simulationService.start_simulation(this.token).toPromise();
+      let response = await this.simulationService
+        .start_simulation(this.token)
+        .toPromise();
       console.log('Response Status:', response.status);
 
       if (response.status == 200) {
@@ -53,79 +75,97 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async getVehicles(){
+  async getVehicles() {
+    debugger;
     this.token = localStorage.getItem('token');
-    try{
-      for(let i = 1; i < 100; i++){
-        let response = await this.simulationService.get_cargo_transporter(this.token, i);
-        if(response != null){
-            this.cargoVehicles.push(response);
-        }else{
+    this.cargoVehicles = [];
+    this.cargosIds = [];
+    const cargosIdsString = localStorage.getItem('cargosIds');
+    if (cargosIdsString !== null) {
+      this.cargosIds = JSON.parse(cargosIdsString);
+    }
+
+    try {
+      for (let i = 0; i < this.cargosIds.length; i++) {
+        let response = await this.simulationService.get_cargo_transporter(
+          this.token,
+          this.cargosIds[i]
+        );
+        if (response != null) {
+          this.cargoVehicles.push(response);
+        } else {
           break;
         }
-        
       }
-      
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
-      
     }
   }
 
-  async viewDetails(id: number){
+  async viewDetails(id: number) {
     this.token = localStorage.getItem('token');
-    try{
+    try {
       // let response = await this.simulationService.
-    }catch(err){
+    } catch (err) {
       console.log(err);
-      
     }
   }
 
-  async getCoins(){
+  async getCoins() {
+    debugger
     this.token = localStorage.getItem('token');
-    try{
+    try {
       let response = await this.simulationService.get_coins(this.token);
       return response;
-    }catch(err){
+    } catch (err) {
       console.log(err);
-      
     }
   }
-  redirectLogin(){
+  redirectLogin() {
     this.router.navigate(['/login']);
   }
 
-  getNextId(arr: CargoResponse[]): number {
-    if (arr.length === 0) {
-        return 1; 
+  async buyCargo() {
+    debugger;
+    if (this.totalCoins >= 1000) {
+      const userInput = prompt('Please enter a location id:');
+      if (userInput === null || userInput.trim() === '') {
+        console.log('User cancelled or did not enter a location id.');
+        return;
+      }
+      const userNumber = parseFloat(userInput);
+      if (!isNaN(userNumber)) {
+        console.log('User entered number:', userNumber);
+        this.locationId = userNumber;
+      } else {
+        console.log('Invalid input. Please enter a valid location id.');
+      }
+
+      this.token = localStorage.getItem('token');
+      try {
+        let response = await this.simulationService.buy_cargo_transporter(
+          this.token,
+          this.locationId
+        );
+
+        this.cargosIds.push(response);
+        localStorage.removeItem('cargosIds');
+        localStorage.setItem('cargosIds', JSON.stringify(this.cargosIds));
+        this.totalCoins = await this.getCoins();
+        setTimeout(() => {
+          alert('Cargo buyed');
+          this.getVehicles();
+        }, 1500);
+        return response;
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert('Insuficient funds');
     }
-
-    const maxId = arr.reduce((max, cargo) => {
-        return cargo.id > max ? cargo.id : max;
-    }, arr[0].id);
-
-    return maxId + 1;
   }
 
-  async buyCargo(){
-    debugger
-    if(this.totalCoins > 1000){
-      let id: number = this.getNextId(this.cargoVehicles);
-      this.token = localStorage.getItem('token');
-    try{
-      let response = await this.simulationService.buy_cargo_transporter(this.token,id);
-      setTimeout(()=>{
-        alert("Cargo buyed");
-      },1500)
-      return response;
-    }catch(err){
-      console.log(err);
-      
-    }
-    }else{
-      alert("Insuficient funds")
-    }
+  toggleOpenOrders() {
+    this.openOrders = !this.openOrders;
   }
 }
