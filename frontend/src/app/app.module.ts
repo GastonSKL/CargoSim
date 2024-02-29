@@ -10,12 +10,14 @@ import { SimulationService } from './Services/simulation.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { HomeComponent } from './Components/home/home.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

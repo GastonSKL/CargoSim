@@ -34,13 +34,22 @@ export class SimulationService {
       );
   }
 
-  stop_simulation(token: string | null){
+  stop_simulation(token: string | null): Observable<any>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return firstValueFrom(
-      this.httpClient.post<any>(`${this.baseUrl}/Sim/Stop`, '', { headers })
-    );
+    return this.httpClient.post<any>(`${this.baseUrl}/Sim/Stop`, '', { headers, observe: 'response' })
+      .pipe(
+        catchError((error: any) => {
+          let errorMessage: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `Error: ${error.error.message}`;
+          } else {
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          }
+          return errorMessage;
+        })
+      );
   }
 
   get_coins(token: string | null){
