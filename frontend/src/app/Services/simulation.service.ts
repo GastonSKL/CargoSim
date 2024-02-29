@@ -71,6 +71,7 @@ export class SimulationService {
   }
 
   get_all_available(token: string | null){
+    debugger
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });

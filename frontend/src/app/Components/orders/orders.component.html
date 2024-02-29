@@ -1,0 +1,40 @@
+<div class="modal-custom" style="display: flex; flex-direction: column;">
+    <div style="padding: 1em; background-color: rgba(217, 77, 252, 0.479); color: white; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            Orders
+        </div>
+        <div>
+            <button class="btn-custom" style="width: 100px;" (click)="createOrders()">Create more</button>
+        </div>
+    </div>
+    <div style="overflow: auto;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 1em; padding: 1em 0;">
+            <div class="order-item" *ngFor="let object of ordersList">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="padding-left: .5em;">Id:</div>
+                    <div style="padding-right: .5em;">{{object.id}}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="padding-left: .5em;">Value:</div>
+                    <div style="padding-right: .5em;">{{object.value}}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="padding-left: .5em;">Origin:</div>
+                    <div style="padding-right: .5em;">{{object.originNodeId}}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="padding-left: .5em;">Target:</div>
+                    <div style="padding-right: .5em;">{{object.targetNodeId}}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="padding-left: .5em;">Load:</div>
+                    <div style="padding-right: .5em;">{{object.load}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-background">
+
+</div>

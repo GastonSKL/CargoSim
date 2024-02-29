@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.isAuthenticated = !!this.token;
     await this.getVehicles();
-    debugger
     this.totalVehicles = this.cargoVehicles.length;
     this.totalCoins =  await this.getCoins();
   }
@@ -59,7 +58,6 @@ export class HomeComponent implements OnInit {
     try{
       for(let i = 1; i < 100; i++){
         let response = await this.simulationService.get_cargo_transporter(this.token, i);
-        console.log(response);
         if(response != null){
             this.cargoVehicles.push(response);
         }else{
@@ -89,7 +87,6 @@ export class HomeComponent implements OnInit {
     this.token = localStorage.getItem('token');
     try{
       let response = await this.simulationService.get_coins(this.token);
-      console.log(response);
       return response;
     }catch(err){
       console.log(err);
@@ -100,7 +97,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-   getNextId(arr: CargoResponse[]): number {
+  getNextId(arr: CargoResponse[]): number {
     if (arr.length === 0) {
         return 1; 
     }
@@ -110,7 +107,7 @@ export class HomeComponent implements OnInit {
     }, arr[0].id);
 
     return maxId + 1;
-}
+  }
 
   async buyCargo(){
     debugger
@@ -119,7 +116,6 @@ export class HomeComponent implements OnInit {
       this.token = localStorage.getItem('token');
     try{
       let response = await this.simulationService.buy_cargo_transporter(this.token,id);
-      console.log(response);
       setTimeout(()=>{
         alert("Cargo buyed");
       },1500)

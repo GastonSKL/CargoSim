@@ -1,0 +1,32 @@
+.modal-custom {
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.938);
+  z-index: 999;
+}
+
+.modal-background {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(202, 201, 201, 0.603);
+  z-index: 998;
+}
+
+.order-item {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  font-size: .8em;
+}
+
+.order-item:hover{
+    border: 1px solid pink;
+    cursor: pointer;
+}
