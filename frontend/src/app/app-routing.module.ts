@@ -4,8 +4,10 @@ import { LoginComponent } from './Components/login/login.component';
 import { HomeComponent } from './Components/home/home.component';
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'home', component: HomeComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to /login if no route specified
+  { path: '**', redirectTo: '/login' } // Redirect to /login if route not found
 ];
 
 @NgModule({

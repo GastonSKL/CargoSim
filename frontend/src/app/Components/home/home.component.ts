@@ -143,7 +143,7 @@ ngOnDestroy(): void {
     }
   }
   redirectLogin() {
-    this.router.navigate(['']);
+    this.router.navigate(['/login']);
   }
 
   async buyCargo() {
