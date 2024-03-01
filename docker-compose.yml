@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  msnet6:
+    image: msnet6
+    build: 
+      context: ./HahnCargoSim
+      dockerfile: ./Dockerfile
+    ports:
+      - 44338:44338
+    depends_on:
+      - rabbitmq  # Ensure msnet6 waits for RabbitMQ to be ready
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "5672:5672" 
+      - "15672:15672"
+
+  angular:
+    image: angular
+    build: 
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 4200:80
