@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms'; // Import Validators
 import { UsersService } from '../../Services/users.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   formulario: FormGroup;
 
   userService = inject(UsersService);
@@ -16,6 +16,10 @@ export class LoginComponent {
   isLogged: any = undefined;
   isButtonDisabled: boolean = false;
   submitted: boolean = false;
+
+  ngOnInit(): void {
+    localStorage.clear();
+  }
 
   constructor() {
     this.formulario = new FormGroup({

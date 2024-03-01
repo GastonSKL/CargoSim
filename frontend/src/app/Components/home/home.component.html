@@ -1,23 +1,12 @@
 <div *ngIf="isAuthenticated" >
-    <div class="container text-center position-relative" style="min-width: 800px;" *ngIf="!simStarted ">
-        <div [@fadeInOut] style="display: flex; flex-direction: column; align-items: center; justify-content: center;" *ngIf="!simStarting">
-            <div class="display-4">Welcome to Hahn simulation!</div>
-            <img src="../../../assets/cargoLogo.png" alt="cargo" style="width: 300px;">
-            <button class="btn-custom" (click)="startSim()">Start</button>
-        </div>
-        <div [@fadeInOut] class="sim-started" *ngIf="simStarting">
-        Simulation starting...
-        </div>
-    </div>
-    <div *ngIf="simStarted " >
+    <div  #sim>
         <app-navbar [isStarted]="simStarted" class="nav-extra"></app-navbar>
         <div class="container-fluid p-3 home-container">
             <div class="header-container">
                 <div class="home-header">
                     <p class="text-white">Total coins: <b>${{totalCoins}}</b></p>
                     <p class="text-white">Cargo Vehicles: <b>{{totalVehicles}}</b></p>
-                    <button class="btn btn-success" style="width: 100px;" (click)="buyCargo()">Buy</button>
-                    <button class="btn btn-secondary" style="width: 100px; margin-top: 1em;" (click)="refreshList()">Refresh</button>
+                    
                 </div>
                 <div>
                     <button class="btn-custom" style="width: 150px;" (click)="toggleOpenOrders()">Orders</button>
@@ -42,12 +31,10 @@
     </div>
 </div>
 
-
-
-
 <div *ngIf="!isAuthenticated">
     <div style="display: flex; flex-direction: column; gap: 3em; align-items: center; justify-content: center;">
         <h1>Unauthorized access</h1>
+        <h2>Simulation stopped</h2>
         <img src="../../../assets/ban.png" alt="Ban" style="width: 300px;">
         <button class="btn-custom" (click)="redirectLogin()">Back to loggin</button>
     </div>

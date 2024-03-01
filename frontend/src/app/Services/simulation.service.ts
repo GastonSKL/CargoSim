@@ -71,7 +71,6 @@ export class SimulationService {
   }
 
   get_all_available(token: string | null){
-    debugger
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -89,7 +88,7 @@ export class SimulationService {
     );
   }
 
-  post_accept(token: string | null, id: number){
+  post_accept(token: string | null, id: number | undefined){
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -127,15 +126,20 @@ export class SimulationService {
     );
   }
 
-  move_cargo_transporter(token: string | null, id: number, targetNodeId: number){
+  move_cargo_transporter(token: string | null, id: number, targetNodeId: number | undefined) {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
     });
 
     return firstValueFrom(
-      this.httpClient.put<any>(`${this.baseUrl}/CargoTransporter/Move?transporterId=${id}&targetNodeId=${targetNodeId}}`,'',{ headers })
+        this.httpClient.put<any>(
+            `${this.baseUrl}/CargoTransporter/Move?transporterId=${id}&targetNodeId=${targetNodeId}`,
+            {}, 
+            { headers }
+        )
     );
-  }
+}
+
 
   
 

@@ -33,7 +33,8 @@ export class NavbarComponent {
         setTimeout(() => {
           this.isStarted = false;
           localStorage.clear();
-          this.router.navigate(['/login'])
+          this.router.navigate(['/'])
+          location.reload();
         }, 1500);
       }
     } catch (err) {
